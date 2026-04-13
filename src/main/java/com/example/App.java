@@ -12,12 +12,13 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import java.time.Duration;
 
 public class App {
+
     public static void main(String[] args) {
 
-        // Setup ChromeDriver automatically
+        // Setup driver automatically
         WebDriverManager.chromedriver().setup();
 
-        // Headless Chrome for Jenkins
+        // Headless Chrome (Jenkins safe)
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
@@ -33,20 +34,20 @@ public class App {
 
             // Search product
             WebElement searchInput = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(
-                    By.cssSelector("input[placeholder='Search Product']")
-                )
+                    ExpectedConditions.visibilityOfElementLocated(
+                            By.cssSelector("input[placeholder='Search Product']")
+                    )
             );
             searchInput.sendKeys("Dress");
 
             WebElement searchButton = driver.findElement(
-                By.cssSelector("button.btn.btn-default.btn-sm")
+                    By.cssSelector("button.btn.btn-default.btn-sm")
             );
             searchButton.click();
 
             // Validate result
             wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//h2[contains(text(),'Searched Products')]")
+                    By.xpath("//h2[contains(text(),'Searched Products')]")
             ));
 
             System.out.println("Search successful ✅");
